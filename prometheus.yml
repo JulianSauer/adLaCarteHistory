@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 60s
+  evaluation_interval: 60s
+
+scrape_configs:
+  - job_name: 'adlacarte-history'
+    static_configs:
+      - targets: ['adlacarte-history:8080']
