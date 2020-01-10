@@ -54,7 +54,7 @@ func main() {
 
         for true {
             updateValues(client)
-            time.Sleep(5 * time.Minute)
+            time.Sleep(15 * time.Second)
         }
     }()
     log.Fatal(http.ListenAndServe(":8080", nil))
