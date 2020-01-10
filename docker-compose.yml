@@ -39,9 +39,6 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${PASSWORD:-admin}
     volumes:
-      - type: bind
-        source: $PWD/grafana.ini
-        target: /etc/grafana/grafana.ini
       - type: volume
         source: grafana_storage
         target: /var/lib/grafana
