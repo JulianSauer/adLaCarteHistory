@@ -114,7 +114,6 @@ func getValueOf(supplier int, client *resty.Client) float64 {
 func readCredentialsFromFile(file string) string {
 	if credentialFile, e := ioutil.ReadFile(file); e != nil {
 		log.Fatal(e)
-		panic("Error reading credentials file")
 	} else {
 		credentials := strings.ReplaceAll(string(credentialFile), "\n", "")
 		if credentials == "" {
