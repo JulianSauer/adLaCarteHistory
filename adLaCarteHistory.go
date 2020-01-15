@@ -24,15 +24,8 @@ var suppliersToName = [7]string{"Entenhaus", "ChiliPeppers", "PiDoe", "ChinaImbi
 var suppliersToGauge [7]prometheus.Gauge
 
 func main() {
+	CREDENTIALS = readCredentialsFromFile("credentials")
 	http.Handle("/metrics", promhttp.Handler())
-	if credentialFile, e := ioutil.ReadFile("credentials"); e != nil {
-		log.Fatal(e)
-	} else {
-		CREDENTIALS = strings.ReplaceAll(string(credentialFile), "\n", "")
-		if CREDENTIALS == "" {
-			log.Fatal("Credentials missing")
-		}
-	}
 
 	for i := 0; i < len(suppliersToGauge); i++ {
 		suppliersToGauge[i] = prometheus.NewGauge(
@@ -116,4 +109,16 @@ func getValueOf(supplier int, client *resty.Client) float64 {
 		log.Fatal(e)
 	}
 	return value
+}
+
+func readCredentialsFromFile(file string) string {
+	if credentialFile, e := ioutil.ReadFile(file); e != nil {
+		log.Fatal(e)
+	} else {
+		credentials := strings.ReplaceAll(string(credentialFile), "\n", "")
+		if credentials == "" {
+			log.Fatal("Credentials missing")
+		}
+		return credentials
+	}
 }
