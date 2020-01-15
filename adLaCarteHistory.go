@@ -119,7 +119,6 @@ func readCredentialsFromFile(file string) string {
         credentials := strings.ReplaceAll(string(credentialFile), "\n", "")
         if credentials == "" {
 			log.Fatal("Credentials missing")
-			panic("Credentials missing")
 		}
 		return credentials
     }
