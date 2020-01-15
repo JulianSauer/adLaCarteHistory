@@ -112,13 +112,14 @@ func getValueOf(supplier int, client *resty.Client) float64 {
 }
 
 func readCredentialsFromFile(file string) string {
+	var credentials = ""
 	if credentialFile, e := ioutil.ReadFile(file); e != nil {
 		log.Fatal(e)
 	} else {
-		credentials := strings.ReplaceAll(string(credentialFile), "\n", "")
+		credentials = strings.ReplaceAll(string(credentialFile), "\n", "")
 		if credentials == "" {
 			log.Fatal("Credentials missing")
 		}
-		return credentials
 	}
+	return credentials
 }
