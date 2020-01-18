@@ -1,0 +1,37 @@
+swagger: "2.0"
+info:
+  description: "A (self-written) open-api 2.0 specification
+  for the Adlacarte service used for testing"
+  version: "1.0.0"
+  title: "Adlacarte"
+schemes:
+- "https"
+- "http"
+basePath: "/api"
+paths:
+  /offices/{officeId}/suppliers/{supplierId}/reachedOrderValue:
+    get:
+      summary: "Get the reached value of all orders"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "officeId"
+        in: "path"
+        type: "integer"
+        required: true
+      - name: "supplierId"
+        in: "path"
+        type: "integer"
+        required: true
+      responses:
+        '200':
+          description: "successfully got value"
+          schema:
+            type: "integer"
+          examples:
+            chillipeppers:
+              value:
+                2
+            pidoe:
+              value:
+                10

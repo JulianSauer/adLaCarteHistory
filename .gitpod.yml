@@ -1,1 +1,4 @@
-{ image: gitpod/workspace-full }
+image: gitpod/workspace-full
+vscode:
+  extensions:
+    - 42Crunch.vscode-openapi@2.1.0:P6COjHg9GdJg0PuDjcc8mQ==
