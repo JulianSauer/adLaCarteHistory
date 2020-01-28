@@ -17,7 +17,7 @@ type Supplier struct {
 	id                int
 	name              string
 	office            int
-	reachedOrderValue float64
+	reachedOrderValue float32
 }
 
 var apiURL = getEnv("ADLACARTE_API_URL", "https://adlacarte.adesso.de/api/")
@@ -50,11 +50,11 @@ func fetchMetricsForSupplier(supplier *Supplier, client *resty.Client) error {
 		return e
 	}
 	responseAsString := string(response.Body())
-	floatVal, e := strconv.ParseFloat(responseAsString, len(responseAsString))
+	floatVal, e := strconv.ParseFloat(responseAsString, 32)
 	if e != nil {
 		return e
 	}
-	supplier.reachedOrderValue = floatVal
+	supplier.reachedOrderValue = float32(floatVal)
 	return nil
 }
 
