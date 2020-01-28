@@ -35,23 +35,27 @@ func main() {
 	client := buildClient()
 	http.HandleFunc("/metrics", func(w http.ResponseWriter, r *http.Request) {
 		for _, supplier := range suppliers {
-			fetchMetricsForSupplier(&supplier, client)
+			if e := fetchMetricsForSupplier(&supplier, client); e != nil {
+				log.Println(e)
+			}
 		}
 		writeMetrics(suppliers[:], w)
 	})
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-func fetchMetricsForSupplier(supplier *Supplier, client *resty.Client) {
+func fetchMetricsForSupplier(supplier *Supplier, client *resty.Client) error {
 	response, e := client.R().Get(fmt.Sprintf("%s/offices/%d/suppliers/%d", apiURL, supplier.office, supplier.id))
 	if e != nil {
-		log.Println(e)
+		return e
 	}
 	responseAsString := string(response.Body())
-	supplier.reachedOrderValue, e = strconv.ParseFloat(responseAsString, len(responseAsString))
+	floatVal, e := strconv.ParseFloat(responseAsString, len(responseAsString))
 	if e != nil {
-		log.Println(e)
+		return e
 	}
+	supplier.reachedOrderValue = floatVal
+	return nil
 }
 
 func writeMetrics(suppliers []Supplier, w io.Writer) {
