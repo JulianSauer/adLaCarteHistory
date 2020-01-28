@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -53,9 +54,9 @@ func fetchMetricsForSupplier(supplier *Supplier, client *resty.Client) {
 	}
 }
 
-func writeMetrics(suppliers []Supplier, w http.ResponseWriter) {
+func writeMetrics(suppliers []Supplier, w io.Writer) {
 	for _, supplier := range suppliers {
-		fmt.Fprintf(w, "reachedOrderValue{supplier=\"%s\",office=\"%d\"} %f \n", supplier.name, supplier.office, supplier.reachedOrderValue)
+		fmt.Fprintf(w, "reachedOrderValue{supplier=\"%s\",office=\"%d\"} %.2f\n", supplier.name, supplier.office, supplier.reachedOrderValue)
 	}
 }
 
